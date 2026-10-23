@@ -1,0 +1,24 @@
+rows in raw file: 16366
+unparseable SMILES dropped: 0 rows, 0 unique SMILES
+unique SMILES: 10614
+unique SMILES with duplicate measurements: 2186
+dropped for conflicting measurements (std > 5.0 K): 552
+unique compounds kept: 10062
+flammable (flash point <= 333.15 K): 3230 (32.1%)
+not flammable: 6832 (67.9%)
+is_silicon: 526 compounds, 62.5% flammable
+is_metallic: 694 compounds, 58.4% flammable
+is_tin: 44 compounds, 18.2% flammable
+is_acid: 1094 compounds, 13.3% flammable
+
+Butina clusters (Tanimoto >= 0.7, Morgan r=2, 2048 bits), merged by InChIKey connectivity: 6788
+singleton clusters: 5114; largest cluster: 48; clusters > 50: 0
+
+split summary
+train: 7043 (70.0%), flammable 32.1%, acid 766, metallic 485, silicon 369, tin 30
+val: 1510 (15.0%), flammable 32.1%, acid 164, metallic 104, silicon 79, tin 7
+test: 1509 (15.0%), flammable 32.1%, acid 164, metallic 105, silicon 78, tin 7
+val -> nearest train neighbour Tanimoto: max 0.960, mean 0.557, share >= 0.7: 2.52%
+test -> nearest train neighbour Tanimoto: max 0.893, mean 0.555, share >= 0.7: 1.92%
+clusters shared across splits: 0
+environment: rdkit 2026.09.1, numpy 2.4.6, pandas 3.1.0
