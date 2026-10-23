@@ -1,0 +1,12 @@
+rows in raw file: 16366
+unparseable SMILES dropped: 0 rows, 0 unique SMILES
+unique SMILES: 10614
+unique SMILES with duplicate measurements: 2186
+dropped for conflicting measurements (std > 5.0 K): 552
+unique compounds kept: 10062
+flammable (flash point <= 333.15 K): 3230 (32.1%)
+not flammable: 6832 (67.9%)
+is_silicon: 526 compounds, 62.5% flammable
+is_metallic: 694 compounds, 58.4% flammable
+is_tin: 44 compounds, 18.2% flammable
+is_acid: 1094 compounds, 13.3% flammable
