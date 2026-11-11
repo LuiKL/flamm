@@ -30,3 +30,14 @@ def metrics(y_true, y_pred):
         "accuracy": (tp + tn) / len(y_true),
         "tn": int(tn), "fp": int(fp), "fn": int(fn), "tp": int(tp),
     }
+
+
+def chosen_params(model, path="results/chosen_settings_general.csv"):
+    row = pd.read_csv(path).set_index("model").loc[model]
+    parsed = dict(part.split("=", 1) for part in row["settings"].split(", "))
+    cw = parsed.get("class_weight")
+    out = {"class_weight": None if cw == "None" else cw}
+    for key in ("C", "gamma"):
+        if key in parsed:
+            out[key] = float(parsed[key])
+    return out
