@@ -39,6 +39,23 @@ def error_review():
     print(errors[["compound", "flashpoint", "kind", "is_acid", "is_metallic", "is_silicon"]].head(15).to_string(index=False))
 
 
+def subgroup_table():
+    df = pd.read_csv(RESULTS_DIR / "test_predictions.csv")
+    tags = ["is_acid", "is_metallic", "is_silicon", "is_tin"]
+    groups = {"no_tag": df[tags].sum(axis=1) == 0, "acid": df["is_acid"] == 1, "metallic": df["is_metallic"] == 1,
+              "silicon": df["is_silicon"] == 1, "tin": df["is_tin"] == 1}
+    rows = []
+    for model in [c for c in df.columns if c.startswith("pred_")]:
+        for name, mask in groups.items():
+            sub = df[mask]
+            tp = int(((sub[model] == 1) & (sub["flammable"] == 1)).sum())
+            fp = int(((sub[model] == 1) & (sub["flammable"] == 0)).sum())
+            fn = int(((sub[model] == 0) & (sub["flammable"] == 1)).sum())
+            rows.append({"model": model[5:], "group": name, "n": len(sub), "n_flammable": tp + fn, "recall": tp / max(tp + fn, 1),
+                         "precision": tp / max(tp + fp, 1), "error_rate": (fp + fn) / len(sub)})
+    pd.DataFrame(rows).to_csv(RESULTS_DIR / "test_subgroup_recall.csv", index=False)
+
+
 def importance():
     splits = load_splits()
     train, val = splits["train"], splits["val"]
@@ -57,6 +74,7 @@ def importance():
 
 
 def main():
+    subgroup_table()
     error_review()
     importance()
 
